@@ -2,79 +2,81 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>易经数字能量大师 - 专业精简版</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>易经数字能量大师 - 全能尊享版</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --gold: #d4af37;
+            --gold-dim: #8a7020;
             --bg-dark: #0f0f13;
-            --card-bg: #18181c;
-            --item-bg: #222226;
+            --card-bg: #1c1c21;
             --text-main: #e0e0e0;
-            --text-sub: #999;
-            --red-auspicious: #ff4d4d; 
-            --green-inauspicious: #4dabf7; /* 凶星改为偏蓝/青色，减少视觉焦虑，或者保持绿色 */
-            --level-1: #ff0000;
-            --level-2: #ff8800;
-            --level-3: #ffd700;
-            --level-4: #ccc;
+            --red-auspicious: #c92a2a; /* 吉星红 */
+            --green-inauspicious: #2b8a3e; /* 凶星绿 (易经中木克土，常用绿代表变数) */
+            --purple-noble: #5f3dc4; /* 贵人/天医 */
         }
 
-        * { box-sizing: border-box; }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'PingFang SC', 'Heiti SC', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-main);
             margin: 0;
             padding: 0;
-            font-size: 14px; /* 全局字体缩小 */
-            line-height: 1.4;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* 顶部导航 - 更加紧凑 */
+        /* 顶部导航 */
         header {
-            background: #111;
-            padding: 10px 15px;
+            background: radial-gradient(circle at center, #2a2a35 0%, #000 100%);
+            padding: 2rem 1rem;
             text-align: center;
-            border-bottom: 1px solid #333;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            border-bottom: 2px solid var(--gold);
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.2);
         }
 
         header h1 {
             color: var(--gold);
             margin: 0;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
         }
 
+        header .subtitle {
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 10px;
+        }
+
+        /* 主容器 */
         .container {
-            max-width: 600px; /* 限制最大宽度，手机体验更好 */
+            max-width: 900px;
             margin: 0 auto;
-            padding: 10px;
+            padding: 20px;
         }
 
         /* 选项卡切换 */
         .tabs {
             display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
             background: var(--card-bg);
-            border-radius: 8px;
-            padding: 3px;
-            margin-bottom: 10px;
+            border-radius: 30px;
+            padding: 5px;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 8px;
+            padding: 12px;
             border: none;
             background: transparent;
-            color: #666;
-            font-size: 0.85rem;
-            border-radius: 6px;
-            transition: 0.2s;
+            color: #888;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.3s;
+            border-radius: 25px;
         }
 
         .tab-btn.active {
@@ -83,141 +85,132 @@
             font-weight: bold;
         }
 
-        /* 输入区 - 紧凑 */
+        /* 输入区域 */
         .input-section {
-            background: var(--card-bg);
-            padding: 15px;
-            border-radius: 10px;
+            background: linear-gradient(145deg, #25252b, #18181d);
+            padding: 30px;
+            border-radius: 20px;
             text-align: center;
-            margin-bottom: 10px;
-            border: 1px solid #2a2a2a;
+            margin-bottom: 30px;
+            border: 1px solid #333;
         }
 
         input {
-            width: 100%;
-            padding: 10px;
-            font-size: 1.1rem;
-            border: 1px solid #333;
-            background: #000;
+            width: 80%;
+            padding: 15px;
+            font-size: 1.4rem;
+            border: 2px solid #444;
+            background: #111;
             color: var(--gold);
-            border-radius: 6px;
+            border-radius: 12px;
             text-align: center;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
             outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
 
         .action-btn {
-            width: 100%;
-            background: linear-gradient(90deg, #d4af37, #b8860b);
+            background: linear-gradient(90deg, #d4af37, #f2d06b);
             color: #000;
-            font-weight: bold;
+            font-weight: 800;
             border: none;
-            padding: 10px;
-            font-size: 0.95rem;
-            border-radius: 6px;
+            padding: 15px 50px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            transform: translateY(0);
+            transition: 0.2s;
         }
 
-        /* 通用卡片样式 */
+        .action-btn:active {
+            transform: translateY(2px);
+        }
+
+        /* 结果卡片 */
         .card {
             background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 10px;
-            border: 1px solid #2a2a2a;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--gold);
+            position: relative;
+            animation: fadeIn 0.5s ease;
         }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card h3 {
+            color: var(--gold);
+            margin-top: 0;
             border-bottom: 1px solid #333;
-            padding-bottom: 8px;
-            margin-bottom: 8px;
-        }
-
-        .card-title {
-            color: var(--gold);
-            font-size: 0.95rem;
-            font-weight: bold;
-        }
-
-        /* --- 仿右图：列表样式 --- */
-        .result-highlight-box {
-            background: rgba(212, 175, 55, 0.15);
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            padding: 10px;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
-
-        .analysis-list {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .list-row {
+            padding-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--item-bg);
-            padding: 8px 12px;
-            border-radius: 4px;
-            border-left: 3px solid transparent;
-            font-size: 0.9rem;
         }
 
-        /* 列表项左边框颜色区分 */
-        .row-ji { border-left-color: var(--red-auspicious); }
-        .row-xiong { border-left-color: var(--green-inauspicious); }
-        .row-ping { border-left-color: #777; }
-
-        .row-pair { font-family: monospace; font-size: 1rem; color: #fff; }
-        .row-name { font-weight: bold; }
-        .row-level { font-size: 0.75rem; padding: 1px 5px; border-radius: 3px; background: #333; color: #aaa;}
-
-        /* 吉凶颜色 */
-        .text-ji { color: var(--red-auspicious); }
-        .text-xiong { color: var(--green-inauspicious); } /* 使用青色/淡蓝代替深绿，暗黑模式下更清晰 */
-
-        /* 特殊断语区域 */
-        .special-box {
-            background: #222;
-            border: 1px dashed #444;
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 5px;
-        }
-        .special-pair {
-            color: var(--gold);
-            font-weight: bold;
-            margin-right: 5px;
-        }
-        .special-desc {
-            color: #ccc;
-            font-size: 0.85rem;
+        /* 数组展示 */
+        .number-flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
         }
 
-        /* 评分 */
-        .score-area {
+        .flow-item {
+            background: #2b2b35;
+            padding: 10px 15px;
+            border-radius: 8px;
             text-align: center;
-            padding: 10px 0;
+            min-width: 60px;
+            position: relative;
         }
-        .score-val {
-            font-size: 2rem;
-            font-weight: bold;
-            line-height: 1;
-        }
-        .score-desc { font-size: 0.8rem; color: #888; }
 
-        /* 隐藏元素 */
-        .hidden { display: none; }
+        .flow-num { font-size: 1.5rem; font-weight: bold; display: block; }
+        .flow-star { font-size: 0.9rem; margin-top: 5px; display: block; }
+        
+        /* 吉凶颜色类 */
+        .star-tianyi, .star-shengqi, .star-yannian, .star-fuwei { color: #ff6b6b; } /* 吉 */
+        .star-wugui, .star-jueming, .star-huohai, .star-liusha { color: #69db7c; } /* 凶 */
+        
+        /* 标签 */
+        .tag {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+        .bg-ji { background-color: #c92a2a; }
+        .bg-xiong { background-color: #2b8a3e; }
+        .bg-neutral { background-color: #555; }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .advice-box {
+            background: rgba(212, 175, 55, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px dashed var(--gold);
+            margin-top: 15px;
+        }
 
     </style>
 </head>
@@ -225,130 +218,68 @@
 
 <header>
     <h1>易经数字能量</h1>
+    <div class="subtitle">八星磁场 · 吉凶推演 · 运势化解</div>
 </header>
 
 <div class="container">
     
     <div class="tabs">
         <button class="tab-btn active" onclick="setMode('phone')">手机号码</button>
-        <button class="tab-btn" onclick="setMode('car')">车牌号码</button>
-        <button class="tab-btn" onclick="setMode('birth')">出生日期</button>
+        <button class="tab-btn" onclick="setMode('car')">车牌分析</button>
+        <button class="tab-btn" onclick="setMode('birth')">生辰分析</button>
     </div>
 
     <div class="input-section">
-        <input type="text" id="mainInput" placeholder="请输入号码" onkeypress="if(event.keyCode==13) analyze()">
+        <div id="input-label" style="margin-bottom:10px; color:#aaa;">请输入11位手机号码</div>
+        <input type="text" id="mainInput" placeholder="例如：13912345678" onkeypress="if(event.keyCode==13) analyze()">
+        <br>
         <button class="action-btn" onclick="analyze()">立即解码</button>
-        <div id="input-tip" style="font-size: 0.75rem; color: #666; margin-top: 5px;">支持输入字母（如车牌）自动转换</div>
     </div>
 
-    <div id="result-area" class="hidden">
+    <div id="result-area" style="display:none;">
         
         <div class="card">
-            <div class="card-header">
-                <span class="card-title">磁场总评</span>
-                <span id="score-text" style="font-weight:bold;">0分</span>
-            </div>
-            <div style="display:flex; align-items:center; justify-content:space-between;">
-                <div class="score-area" style="flex:1;">
-                    <div class="score-val" id="total-score">0</div>
-                    <div class="score-desc" id="score-advice">--</div>
-                </div>
-                <div style="width: 80px; height: 80px;">
-                    <canvas id="miniChart"></canvas>
-                </div>
-            </div>
+            <h3>🛡️ 磁场总评与得分</h3>
+            <div class="score-display" id="total-score">0</div>
+            <p style="text-align:center; color:#ccc;" id="score-desc">正在计算...</p>
+            <canvas id="balanceChart" height="100"></canvas>
         </div>
 
         <div class="card">
-            <div class="card-header">
-                <span class="card-title">数字分析结果</span>
-                <span style="font-size:0.75rem; color:#666;">能量等级 1(最强)-4(最弱)</span>
-            </div>
-            
-            <div class="result-highlight-box" id="display-number"></div>
-
-            <div class="analysis-list" id="list-container">
+            <h3>🔢 数字磁场流向解析</h3>
+            <p style="font-size:0.9rem; color:#888;">依据《易经》0/5特殊规则（0为隐/伏位，5为桥/加强）自动转换</p>
+            <div class="number-flow" id="star-flow">
                 </div>
         </div>
 
         <div class="card">
-            <div class="card-header">
-                <span class="card-title">特殊组合与直读</span>
-            </div>
-            <div id="special-container">
-                </div>
+            <h3>📖 命格详细解读</h3>
+            <div id="detailed-analysis"></div>
         </div>
 
+        <div class="card">
+            <h3>💡 运势化解与建议</h3>
+            <div id="remedy-area"></div>
+        </div>
     </div>
 </div>
 
 <script>
-    // --- 数据字典：包含能量等级 ---
-    // Level 1: 最强, Level 4: 最弱
-    const STAR_DATA = {
-        '13': { name: '天医', type: '吉', level: 1 }, '31': { name: '天医', type: '吉', level: 1 },
-        '68': { name: '天医', type: '吉', level: 2 }, '86': { name: '天医', type: '吉', level: 2 },
-        '49': { name: '天医', type: '吉', level: 3 }, '94': { name: '天医', type: '吉', level: 3 },
-        '27': { name: '天医', type: '吉', level: 4 }, '72': { name: '天医', type: '吉', level: 4 },
-
-        '14': { name: '生气', type: '吉', level: 1 }, '41': { name: '生气', type: '吉', level: 1 },
-        '67': { name: '生气', type: '吉', level: 2 }, '76': { name: '生气', type: '吉', level: 2 },
-        '39': { name: '生气', type: '吉', level: 3 }, '93': { name: '生气', type: '吉', level: 3 },
-        '28': { name: '生气', type: '吉', level: 4 }, '82': { name: '生气', type: '吉', level: 4 },
-
-        '19': { name: '延年', type: '吉', level: 1 }, '91': { name: '延年', type: '吉', level: 1 },
-        '78': { name: '延年', type: '吉', level: 2 }, '87': { name: '延年', type: '吉', level: 2 },
-        '34': { name: '延年', type: '吉', level: 3 }, '43': { name: '延年', type: '吉', level: 3 },
-        '26': { name: '延年', type: '吉', level: 4 }, '62': { name: '延年', type: '吉', level: 4 },
-
-        '11': { name: '伏位', type: '平', level: 1 }, '22': { name: '伏位', type: '平', level: 2 },
-        '88': { name: '伏位', type: '平', level: 2 }, '99': { name: '伏位', type: '平', level: 1 },
-        '77': { name: '伏位', type: '平', level: 3 }, '66': { name: '伏位', type: '平', level: 3 },
-        '33': { name: '伏位', type: '平', level: 4 }, '44': { name: '伏位', type: '平', level: 4 },
-        '00': { name: '伏位', type: '平', level: 0 }, '55': { name: '伏位', type: '平', level: 0 },
-
-        '12': { name: '绝命', type: '凶', level: 1 }, '21': { name: '绝命', type: '凶', level: 1 },
-        '69': { name: '绝命', type: '凶', level: 2 }, '96': { name: '绝命', type: '凶', level: 2 },
-        '48': { name: '绝命', type: '凶', level: 3 }, '84': { name: '绝命', type: '凶', level: 3 },
-        '37': { name: '绝命', type: '凶', level: 4 }, '73': { name: '绝命', type: '凶', level: 4 },
-
-        '18': { name: '五鬼', type: '凶', level: 1 }, '81': { name: '五鬼', type: '凶', level: 1 },
-        '79': { name: '五鬼', type: '凶', level: 2 }, '97': { name: '五鬼', type: '凶', level: 2 },
-        '36': { name: '五鬼', type: '凶', level: 3 }, '63': { name: '五鬼', type: '凶', level: 3 },
-        '24': { name: '五鬼', type: '凶', level: 4 }, '42': { name: '五鬼', type: '凶', level: 4 },
-
-        '16': { name: '六煞', type: '凶', level: 1 }, '61': { name: '六煞', type: '凶', level: 1 },
-        '47': { name: '六煞', type: '凶', level: 2 }, '74': { name: '六煞', type: '凶', level: 2 },
-        '38': { name: '六煞', type: '凶', level: 3 }, '83': { name: '六煞', type: '凶', level: 3 },
-        '29': { name: '六煞', type: '凶', level: 4 }, '92': { name: '六煞', type: '凶', level: 4 },
-
-        '17': { name: '祸害', type: '凶', level: 1 }, '71': { name: '祸害', type: '凶', level: 1 },
-        '89': { name: '祸害', type: '凶', level: 2 }, '98': { name: '祸害', type: '凶', level: 2 },
-        '46': { name: '祸害', type: '凶', level: 3 }, '64': { name: '祸害', type: '凶', level: 3 },
-        '23': { name: '祸害', type: '凶', level: 4 }, '32': { name: '祸害', type: '凶', level: 4 }
+    // --- 核心数据配置 ---
+    
+    // 八星磁场字典 (等级从强到弱)
+    const STARS = {
+        'TianYi': { name: '天医', type: '吉', desc: '财富、正桃花、健康', color: 'star-tianyi', pairs: ['13','31','68','86','49','94','27','72'] },
+        'ShengQi': { name: '生气', type: '吉', desc: '贵人、人脉、开朗', color: 'star-shengqi', pairs: ['14','41','67','76','39','93','28','82'] },
+        'YanNian': { name: '延年', type: '吉', desc: '事业、领导、强势', color: 'star-yannian', pairs: ['19','91','78','87','34','43','26','62'] },
+        'FuWei':   { name: '伏位', type: '平', desc: '等待、保守、蓄势', color: 'star-fuwei', pairs: ['11','22','33','44','55','66','77','88','99','00'] },
+        'JueMing': { name: '绝命', type: '凶', desc: '冲动、破财、极端', color: 'star-jueming', pairs: ['12','21','69','96','48','84','37','73'] },
+        'WuGui':   { name: '五鬼', type: '凶', desc: '变动、才华、反覆', color: 'star-wugui', pairs: ['18','81','79','97','36','63','24','42'] },
+        'LiuSha':  { name: '六煞', type: '凶', desc: '异性缘、情绪、纠葛', color: 'star-liusha', pairs: ['16','61','47','74','38','83','29','92'] },
+        'HuoHai':  { name: '祸害', type: '凶', desc: '口舌、疾病、小人', color: 'star-huohai', pairs: ['17','71','89','98','46','64','23','32'] }
     };
 
-    // 特殊断语库 (直读)
-    const SPECIAL_MEANINGS = {
-        '16': '异性缘佳/情绪化/肠胃', '61': '异性缘佳/情绪化/肠胃',
-        '47': '服务业/纠结/皮肤', '74': '服务业/纠结/皮肤',
-        '38': '易抑郁/情感纠葛', '83': '易抑郁/情感纠葛/不开心',
-        '29': '犹豫不决/烂桃花', '92': '犹豫不决/烂桃花',
-        '18': '心脏/血光/突变/熬夜', '81': '心脏/血光/突变/敏感',
-        '79': '才华/多疑/宗教', '97': '才华/多疑/宗教',
-        '36': '各种变动/婚姻不顺', '63': '各种变动/婚姻不顺',
-        '24': '意外/心悸', '42': '意外/心悸',
-        '12': '冲动/破财/官司', '21': '冲动/破财/官司',
-        '69': '孤独/重义气/伤肝', '96': '孤独/重义气/伤肝',
-        '37': '辛苦/小破财', '73': '辛苦/小破财',
-        '17': '口才/小人/呼吸道', '71': '口才/小人/呼吸道',
-        '89': '刚强/争吵/意外', '98': '刚强/争吵/意外',
-        '23': '口舌/硬撑', '32': '口舌/硬撑',
-        '13': '正财/血压/善良', '31': '正财/血压/善良',
-        '68': '正财/心宽', '86': '正财/心宽'
-    };
-
-    // 字母映射
+    // 字母映射表 (用于车牌)
     const LETTER_MAP = {
         'A': '01', 'B': '02', 'C': '03', 'D': '04', 'E': '05', 'F': '06', 'G': '07', 'H': '08', 'I': '09',
         'J': '10', 'K': '11', 'L': '12', 'M': '13', 'N': '14', 'O': '15', 'P': '16', 'Q': '17', 'R': '18',
@@ -358,24 +289,29 @@
     let currentMode = 'phone';
     let chartInstance = null;
 
+    // --- 界面交互逻辑 ---
+
     function setMode(mode) {
         currentMode = mode;
         const input = document.getElementById('mainInput');
-        const tip = document.getElementById('input-tip');
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        const label = document.getElementById('input-label');
+        const btns = document.querySelectorAll('.tab-btn');
+        
+        btns.forEach(b => b.classList.remove('active'));
         event.target.classList.add('active');
-        document.getElementById('result-area').classList.add('hidden');
+
+        document.getElementById('result-area').style.display = 'none';
         input.value = '';
 
         if(mode === 'phone') {
-            input.placeholder = '请输入手机号码';
-            tip.innerText = '0按前数处理(伏位)，5表示加强';
+            label.innerText = '请输入手机号码 (11位)';
+            input.placeholder = '13912345678';
         } else if(mode === 'car') {
-            input.placeholder = '如：BKK1832';
-            tip.innerText = '字母将自动转换为数字分析';
+            label.innerText = '请输入车牌号 (如: F2B39)';
+            input.placeholder = 'F2B39 (不含地区前缀)';
         } else {
-            input.placeholder = '如：19881223';
-            tip.innerText = '请输入公历生日';
+            label.innerText = '请输入出生年月日 (如: 19781223)';
+            input.placeholder = '19781223';
         }
     }
 
@@ -383,147 +319,288 @@
         let rawInput = document.getElementById('mainInput').value.toUpperCase().trim();
         if(!rawInput) return;
 
-        // 1. 处理输入
-        let processedStr = '';
+        // 1. 预处理：如果是车牌，先把字母转数字
+        let processedStr = rawInput;
         if (currentMode === 'car') {
-            for(let char of rawInput) {
-                if(/[A-Z]/.test(char)) processedStr += LETTER_MAP[char];
-                else if(/[0-9]/.test(char)) processedStr += char;
-            }
+            processedStr = convertCarPlate(rawInput);
         } else {
+            // 移除非数字字符
             processedStr = rawInput.replace(/\D/g, '');
         }
 
-        // 2. 生成组合 (包含0和5的逻辑)
+        // 2. 生成数组对 (核心逻辑：处理0和5)
         const pairs = generatePairs(processedStr);
         
-        // 3. 渲染
-        renderResult(rawInput, processedStr, pairs);
+        // 3. 匹配八星
+        const analysisResults = mapStars(pairs);
+
+        // 4. 渲染结果
+        renderUI(analysisResults);
     }
 
-    // 严谨的 0/5 解析逻辑
+    // --- 核心算法 ---
+
+    // 车牌转数字逻辑
+    function convertCarPlate(str) {
+        let res = '';
+        for(let char of str) {
+            if(/[A-Z]/.test(char)) {
+                res += LETTER_MAP[char];
+            } else if(/[0-9]/.test(char)) {
+                res += char;
+            }
+        }
+        return res;
+    }
+
+    // 生成数组对 (0和5的特殊规则)
     function generatePairs(str) {
+        let pairs = [];
+        let len = str.length;
+
+        for (let i = 0; i < len - 1; i++) {
+            let curr = str[i];
+            let next = str[i+1];
+
+            // 规则1：遇到0
+            // 逻辑：X0 -> XX (前数伏位), 0Y -> YY (后数伏位)
+            // 根据用户文档：B1306 -> 306 -> 33, 66
+            if (next === '0') {
+                // 当前数形成伏位
+                pairs.push(curr + curr);
+                // 检查0后面是否有数字
+                if (i + 2 < len) {
+                    let afterZero = str[i+2];
+                    // 0后面的数也形成伏位 (0Y -> YY)
+                    // 注意：循环会自然走到 0，我们需要跳过处理吗？
+                    // 按照用户逻辑，06 -> 66。
+                    // 这里我们只处理当前 i 和 i+1 的关系。
+                    // 当 i 走到 0 的位置时，curr='0', next='6' -> 06。
+                    // 0开头/中间规则：06 -> 66。
+                }
+            } 
+            // 规则2：遇到5
+            // 逻辑：X5Y -> XY (桥梁，连接)
+            else if (next === '5') {
+                // 寻找5之后第一个非5的数字
+                let j = i + 1;
+                while(j < len && str[j] === '5') {
+                    j++;
+                }
+                if (j < len) {
+                    pairs.push(curr + str[j]); // 跨越5连接
+                }
+            }
+            // 规则3：当前是0 (0在首位或中间被作为curr)
+            else if (curr === '0') {
+                // 06 -> 66 (0变后数)
+                pairs.push(next + next);
+            }
+            // 规则4：当前是5 (5开头)
+            else if (curr === '5') {
+                // 58... -> 88... (5变后数)
+                pairs.push(next + next);
+            }
+            // 常规情况
+            else {
+                pairs.push(curr + next);
+            }
+        }
+        
+        // 过滤：处理5作为桥梁时可能产生的冗余，或者严格按步进处理
+        // 上面的循环是步进的。
+        // 如果序列是 153
+        // i=0: curr=1, next=5. Push '13'.
+        // i=1: curr=5, next=3. Push '33'. (5变后数) -> 用户文档没明确说是伏位，但说 584 -> 884。
+        // 修正逻辑：5作为连接桥梁，不应产生单独的对子，除非5在开头。
+        // 为了简化且符合大多数数字能量逻辑：
+        // 重新写一个更严谨的流式解析：
+        
+        return advancedPairLogic(str);
+    }
+
+    // 严谨的 0/5 解析器
+    function advancedPairLogic(str) {
         let resultPairs = [];
         for (let i = 0; i < str.length - 1; i++) {
             let a = str[i];
             let b = str[i+1];
             
-            // 正常数字
+            // 忽略当次循环的 b 是 5 的情况？不对，这会漏掉。
+            // 让我们根据“结果导向”
+            
+            // 情况 A: 正常数字
             if (a !== '0' && a !== '5' && b !== '0' && b !== '5') {
                 resultPairs.push(a + b);
             }
-            // 包含 0 (伏位/隐性) -> 视为重复前数或后数
+            // 情况 B: 包含 0 (隐性/伏位)
+            // 10 -> 11
             else if (b === '0') {
                 resultPairs.push(a + a); 
             }
             else if (a === '0') {
                 resultPairs.push(b + b);
             }
-            // 包含 5 (加强/连接)
+            // 情况 C: 包含 5 (加强/桥梁)
+            // 15 -> 寻找下下个
             else if (b === '5') {
                 let k = i + 1;
                 while (k < str.length && str[k] === '5') k++;
-                if (k < str.length) resultPairs.push(a + str[k]);
+                if (k < str.length) {
+                    resultPairs.push(a + str[k]);
+                }
             }
+            // 5在开头
             else if (a === '5') {
                 resultPairs.push(b + b);
             }
         }
+        // 去重或保留流向？数字能量学看重流向，保留所有生成的对子。
         return resultPairs;
     }
 
-    function renderResult(raw, processed, pairs) {
-        document.getElementById('result-area').classList.remove('hidden');
-        document.getElementById('display-number').innerText = processed;
-        
-        const listContainer = document.getElementById('list-container');
-        const specialContainer = document.getElementById('special-container');
-        listContainer.innerHTML = '';
-        specialContainer.innerHTML = '';
-
-        let score = 0;
-        let stats = { good: 0, bad: 0 };
-        let uniqueSpecials = new Set(); // 防止重复的特殊断语
-
-        pairs.forEach(pair => {
-            const data = STAR_DATA[pair];
-            if (!data) return;
-
-            // 1. 生成列表行
-            const row = document.createElement('div');
-            row.className = `list-row ${data.type === '吉' ? 'row-ji' : (data.type === '凶' ? 'row-xiong' : 'row-ping')}`;
-            
-            const textColor = data.type === '吉' ? 'text-ji' : (data.type === '凶' ? 'text-xiong' : '');
-            
-            row.innerHTML = `
-                <div class="row-pair">[${pair}]</div>
-                <div class="row-name ${textColor}">${data.name}${data.level > 0 ? data.level : ''}</div>
-                <div class="row-level">${data.level}级</div>
-            `;
-            listContainer.appendChild(row);
-
-            // 2. 统计分数
-            if(data.type === '吉') { score += (5 - data.level) * 10; stats.good++; }
-            if(data.type === '凶') { score -= (5 - data.level) * 10; stats.bad++; }
-            if(data.type === '平') { score += 2; }
-
-            // 3. 收集特殊断语
-            if(SPECIAL_MEANINGS[pair]) {
-                uniqueSpecials.add(pair);
+    function mapStars(pairs) {
+        return pairs.map(pair => {
+            let starKey = null;
+            for (let key in STARS) {
+                if (STARS[key].pairs.includes(pair)) {
+                    starKey = key;
+                    break;
+                }
             }
-        });
-
-        // 渲染特殊断语
-        if(uniqueSpecials.size > 0) {
-            uniqueSpecials.forEach(pair => {
-                const div = document.createElement('div');
-                div.className = 'special-box';
-                div.innerHTML = `<span class="special-pair">[${pair}]</span> <span class="special-desc">${SPECIAL_MEANINGS[pair]}</span>`;
-                specialContainer.appendChild(div);
-            });
-        } else {
-            specialContainer.innerHTML = '<div style="text-align:center; color:#666; font-size:0.8rem;">无显著特殊组合</div>';
-        }
-
-        // 更新分数与图表
-        const scoreVal = document.getElementById('total-score');
-        const scoreText = document.getElementById('score-text');
-        
-        scoreVal.innerText = score;
-        scoreVal.style.color = score >= 0 ? 'var(--red-auspicious)' : 'var(--green-inauspicious)';
-        
-        let advice = "";
-        if(score > 60) advice = "运势极佳";
-        else if(score > 20) advice = "吉星主导";
-        else if(score > -20) advice = "吉凶平衡";
-        else if(score > -60) advice = "凶星干扰";
-        else advice = "急需化解";
-        
-        document.getElementById('score-advice').innerText = advice;
-        scoreText.innerText = advice;
-
-        renderMiniChart(stats);
+            return { pair, starKey, info: STARS[starKey] };
+        }).filter(item => item.starKey); // 过滤无效组合
     }
 
-    function renderMiniChart(stats) {
-        const ctx = document.getElementById('miniChart').getContext('2d');
-        if(chartInstance) chartInstance.destroy();
+    // --- 渲染逻辑 ---
+
+    function renderUI(results) {
+        document.getElementById('result-area').style.display = 'block';
         
+        // 1. 渲染数组流
+        const flowContainer = document.getElementById('star-flow');
+        flowContainer.innerHTML = '';
+        
+        let stats = { good: 0, bad: 0, types: {} };
+        let score = 0;
+
+        results.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'flow-item';
+            div.style.borderBottom = `3px solid ${item.info.type === '吉' || item.info.type === '平' ? '#c92a2a' : '#2b8a3e'}`;
+            div.innerHTML = `
+                <span class="flow-num">${item.pair}</span>
+                <span class="flow-star ${item.info.color}">${item.info.name}</span>
+            `;
+            flowContainer.appendChild(div);
+
+            // 统计
+            if(item.info.type === '吉') { stats.good++; score += 10; }
+            if(item.info.type === '凶') { stats.bad++; score -= 10; }
+            if(item.info.type === '平') { score += 2; } // 伏位略吉
+            
+            if(!stats.types[item.starKey]) stats.types[item.starKey] = 0;
+            stats.types[item.starKey]++;
+        });
+
+        // 2. 更新分数与图表
+        const scoreEl = document.getElementById('total-score');
+        scoreEl.innerText = score;
+        scoreEl.style.color = score >= 0 ? '#d4af37' : '#2b8a3e';
+        document.getElementById('score-desc').innerText = score > 20 ? '大吉 · 能量顺畅' : (score < -20 ? '需化解 · 凶星干扰' : '平稳 · 吉凶参半');
+
+        renderChart(stats);
+
+        // 3. 详细解读
+        generateDetailedText(stats, results);
+
+        // 4. 化解建议 (核心逻辑)
+        generateRemedy(stats, results);
+    }
+
+    function generateDetailedText(stats, results) {
+        const container = document.getElementById('detailed-analysis');
+        let html = '<ul style="padding-left:20px; color:#ccc;">';
+        
+        // 提取主要磁场
+        let dominant = Object.keys(stats.types).sort((a,b) => stats.types[b] - stats.types[a])[0];
+        if(dominant) {
+            let info = STARS[dominant];
+            html += `<li><strong>主导磁场 [${info.name}]：</strong> ${info.desc}。此号码中出现次数最多，深刻影响您的性格与运势。</li>`;
+        }
+
+        // 检查特定组合
+        let hasTianYi = stats.types['TianYi'] > 0;
+        let hasJueMing = stats.types['JueMing'] > 0;
+        
+        if(hasTianYi) html += `<li><strong style="color:var(--red-auspicious)">财运分析：</strong> 包含天医磁场，预示正财运佳，有贵人相助，适合创业或投资。</li>`;
+        if(hasJueMing) html += `<li><strong style="color:var(--green-inauspicious)">风险提示：</strong> 包含绝命磁场，性格易冲动，需注意肝肾健康及财务大起大落。</li>`;
+        if(stats.types['WuGui'] > 0) html += `<li><strong>变动提示：</strong> 五鬼磁场存在，预示思维活跃但多变，需防心脑血管问题或血光之灾。</li>`;
+
+        html += '</ul>';
+        container.innerHTML = html;
+    }
+
+    function generateRemedy(stats, results) {
+        const container = document.getElementById('remedy-area');
+        let html = '';
+        
+        // 绝命化解逻辑：天医欺绝命
+        if (stats.types['JueMing'] > 0) {
+            if (stats.types['TianYi'] >= stats.types['JueMing']) {
+                html += `<div class="advice-box">✅ <strong>绝命已化解：</strong> 您的号码中虽然有绝命，但有足够的天医磁场进行压制（天医欺绝命），转凶为吉，财运可守。</div>`;
+            } else {
+                html += `<div class="advice-box">⚠️ <strong>绝命需化解：</strong> 绝命磁场过强，建议增加“天医”数字（13, 68, 94等）来保护财库和健康。</div>`;
+            }
+        }
+
+        // 六煞化解逻辑：延年压六煞
+        if (stats.types['LiuSha'] > 0) {
+            if (stats.types['YanNian'] >= stats.types['LiuSha']) {
+                html += `<div class="advice-box">✅ <strong>六煞已化解：</strong> 延年金克六煞水，您的事业运压制了烂桃花和情绪化。</div>`;
+            } else {
+                html += `<div class="advice-box">⚠️ <strong>六煞需化解：</strong> 烂桃花或情绪问题较显，建议增加“延年”数字（19, 78等）来增强定力和家庭和谐。</div>`;
+            }
+        }
+
+        // 祸害化解逻辑
+        if (stats.types['HuoHai'] > 0) {
+             html += `<div class="advice-box">ℹ️ <strong>祸害化解：</strong> 口舌是非多。口诀：生气+延年/伏位 可化解。检查号码中是否有 14+19 或 14+11 组合。</div>`;
+        }
+
+        // 车牌特别建议
+        if (currentMode === 'car' && stats.types['WuGui'] > 0) {
+             html += `<div class="advice-box" style="border-color:red">🚗 <strong>行车安全：</strong> 车牌带五鬼，易有突发状况。建议车内摆放“生气+天医+延年”组合的饰品进行化解（如数字串 141319）。</div>`;
+        }
+
+        if (html === '') html = '<p>您的号码磁场较为平衡，或主要由吉星组成，无需特殊化解。</p>';
+        container.innerHTML = html;
+    }
+
+    function renderChart(stats) {
+        const ctx = document.getElementById('balanceChart').getContext('2d');
+        if(chartInstance) chartInstance.destroy();
+
         chartInstance = new Chart(ctx, {
-            type: 'doughnut',
+            type: 'bar',
             data: {
-                labels: ['吉', '凶'],
+                labels: ['吉星总数', '凶星总数'],
                 datasets: [{
+                    label: '能量对比',
                     data: [stats.good, stats.bad],
-                    backgroundColor: ['#ff4d4d', '#4dabf7'], // 红蓝对比
-                    borderWidth: 0
+                    backgroundColor: ['#c92a2a', '#2b8a3e'],
+                    borderColor: '#111',
+                    borderWidth: 1
                 }]
             },
             options: {
+                indexAxis: 'y',
                 responsive: true,
-                maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
-                cutout: '70%'
+                scales: {
+                    x: { ticks: { color: '#888' }, grid: { color: '#333' } },
+                    y: { ticks: { color: '#fff' } }
+                }
             }
         });
     }
