@@ -2,309 +2,522 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>易经数字能量大师</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字易经 - 乾坤演算</title>
     <style>
         :root {
-            --bg-dark: #121212;
-            --card-bg: #1e1e1e; /* 截图中的深灰背景 */
-            --gold: #d4af37;
-            --text-white: #ffffff;
-            --text-gray: #a0a0a0;
-
-            /* 五行色 - 严格吸取截图颜色 */
-            --c-fire: #e74c3c;  /* 红色 */
-            --c-water: #3498db; /* 蓝色 */
-            --c-wood: #2ecc71;  /* 绿色 */
-            --c-metal: #ecf0f1; /* 白色 */
-            --c-earth: #8d6e63; /* 褐色 */
+            --primary-color: #8E2C2C; /* 传统朱砂红 */
+            --secondary-color: #D4AF37; /* 金色 */
+            --bg-color: #F9F7F2; /* 宣纸白 */
+            --text-color: #333;
+            --yin-color: #2c3e50;
+            --yang-color: #c0392b;
         }
-
-        * { box-sizing: border-box; }
 
         body {
-            font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #000;
-            color: var(--text-white);
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
-            font-size: 14px;
+            line-height: 1.6;
         }
 
-        /* 顶部引言 */
         header {
-            padding: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
             text-align: center;
-            border-bottom: 1px solid #333;
-            background: #111;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-        header h1 { color: var(--gold); margin: 0 0 10px 0; letter-spacing: 2px; }
-        .intro { font-size: 0.8rem; color: #666; max-width: 600px; margin: 0 auto; line-height: 1.5; }
 
-        .container { max-width: 600px; margin: 0 auto; padding: 15px; }
+        header h1 { margin: 0; font-size: 1.5rem; }
+        header p { margin: 5px 0 0; font-size: 0.9rem; opacity: 0.9; }
 
-        /* 输入区 */
-        .input-box {
-            background: var(--card-bg);
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            border: 1px solid #333;
-            text-align: center;
-        }
-        input {
-            width: 100%; padding: 12px; font-size: 1.2rem;
-            background: #000; border: 1px solid #555; color: var(--gold);
-            border-radius: 8px; text-align: center; margin-bottom: 15px; outline: none;
-        }
-        button {
-            background: var(--gold); color: #000; font-weight: bold; border: none;
-            padding: 12px 40px; border-radius: 30px; font-size: 1rem; cursor: pointer;
-            width: 100%;
         }
 
-        /* --- 核心复刻：单数八卦映射分析 --- */
-        .section-header {
-            color: var(--gold);
-            font-size: 1.1rem;
+        /* 导航标签 */
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-size: 1rem;
             font-weight: bold;
-            margin-bottom: 5px;
-            border-left: 4px solid var(--gold);
-            padding-left: 10px;
+            transition: 0.3s;
         }
-        .section-desc {
-            color: #888;
-            font-size: 0.85rem;
+
+        .tab-btn.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .section { display: none; animation: fadeIn 0.5s; }
+        .section.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* 卡片样式 */
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        h2, h3 { color: var(--primary-color); margin-top: 0; }
+
+        /* 表单样式 */
+        .input-group {
             margin-bottom: 15px;
         }
-
-        /* 网格布局：模仿截图的卡片排列 */
-        .gua-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 手机上一行4个 */
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-        /* 小屏幕适配：一行3个 */
-        @media (max-width: 380px) {
-            .gua-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-
-        .gua-card {
-            background-color: #2b2b2b; /* 卡片背景 */
-            border: 1px solid #3d3d3d;
-            border-radius: 8px;
-            padding: 15px 5px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 110px;
-        }
-
-        /* 1. 大数字 */
-        .gc-num {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #fff;
-            line-height: 1;
-            margin-bottom: 8px;
-        }
-        /* 2. 卦象名 (离为离火) */
-        .gc-name {
-            color: var(--gold);
-            font-size: 0.75rem;
-            margin-bottom: 8px;
-            white-space: nowrap;
-        }
-        /* 3. 五行方块 (带颜色背景) */
-        .gc-box {
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: #fff;
-            margin-bottom: 8px;
-        }
-        /* 4. 六亲关系 (中女) */
-        .gc-rel {
-            color: #aaa;
-            font-size: 0.75rem;
-        }
-
-        /* 五行颜色类 */
-        .bg-fire { background-color: var(--c-fire); }
-        .bg-water { background-color: var(--c-water); }
-        .bg-wood { background-color: var(--c-wood); }
-        .bg-earth { background-color: var(--c-earth); }
-        .bg-metal { background-color: var(--c-metal); color: #000; } /* 金用黑字 */
-
-
-        /* --- 数组吉凶列表 --- */
-        .list-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .list-row {
-            background: #1a1a1a;
-            padding: 15px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 5px solid #555;
-        }
-        .row-ji { border-left-color: var(--c-fire); } /* 吉红 */
-        .row-xiong { border-left-color: var(--c-water); } /* 凶蓝 */
-
-        .lr-pair { font-size: 1.3rem; font-weight: bold; font-family: monospace; }
-        .lr-info { text-align: right; }
-        .lr-name { font-weight: bold; font-size: 1rem; }
-        .lr-level { font-size: 0.8rem; color: #888; }
         
-        .ji-text { color: var(--c-fire); }
-        .xiong-text { color: var(--c-water); }
+        input[type="number"], input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            box-sizing: border-box;
+        }
 
-        .hidden { display: none; }
+        button.action-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        /* 结果展示 */
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .num-pair {
+            background: #f0f0f0;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            border: 1px solid #eee;
+        }
+
+        .num-pair .digits { font-size: 1.2rem; font-weight: bold; letter-spacing: 2px; }
+        .num-pair .star-name { font-size: 0.9rem; margin-top: 5px; }
+        .num-pair.ji { color: #27ae60; background: #eafaf1; border-color: #27ae60; } /* 吉 */
+        .num-pair.xiong { color: #c0392b; background: #fdedec; border-color: #c0392b; } /* 凶 */
+        .num-pair.ping { color: #7f8c8d; }
+
+        /* 五行生克图示 */
+        .wuxing-chart {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+            height: 200px;
+        }
+        .wuxing-node {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 50%;
+            background: #333;
+            color: white;
+            position: absolute;
+            font-size: 0.9rem;
+        }
+        /* 简单定位五行 */
+        .wx-wood { top: 10%; right: 10%; background: #2ecc71; }
+        .wx-fire { bottom: 10%; right: 20%; background: #e74c3c; }
+        .wx-earth { bottom: 10%; left: 20%; background: #f1c40f; color: #333; }
+        .wx-metal { top: 10%; left: 10%; background: #bdc3c7; color: #333; }
+        .wx-water { top: -10%; left: 50%; transform: translateX(-50%); background: #3498db; }
+
+        /* 表格 */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: var(--secondary-color); color: white; }
+
+        .diagram-box {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .bagua-diagram {
+            width: 150px;
+            height: 150px;
+            border: 2px solid var(--text-color);
+            border-radius: 50%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(90deg, #fff 50%, #000 50%);
+        }
+        .bagua-diagram::after {
+            content: "☯";
+            font-size: 5rem;
+            color: #333; 
+            /* Simplified Taiji visual */
+        }
+
     </style>
 </head>
 <body>
 
 <header>
-    <h1>易经数字能量</h1>
-    <div class="intro">
-        易经构架为阴阳、三才、五行、八卦。先天为体，后天为用。
-    </div>
+    <h1>数字易经</h1>
+    <p>象数理占 · 八星磁场 · 五行生克</p>
 </header>
 
 <div class="container">
-    <div class="input-box">
-        <div style="margin-bottom:10px; color:#888;">请输入号码 (自动识别字母)</div>
-        <input type="text" id="inputVal" placeholder="如: 13912345678 或 BKK1832" onkeypress="if(event.keyCode==13) run()">
-        <button onclick="run()">立即易经推演</button>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('analysis')">数字演算</button>
+        <button class="tab-btn" onclick="switchTab('culture')">易经文化</button>
+        <button class="tab-btn" onclick="switchTab('reference')">八星图表</button>
     </div>
 
-    <div id="result-area" class="hidden">
-        
-        <div class="section-header">单数·八卦映射分析</div>
-        <div class="section-desc">根据《易经》后天八卦原理，每一个数字都对应一个卦象、五行及六亲关系。</div>
-        
-        <div class="gua-grid" id="single-grid">
+    <div id="analysis" class="section active">
+        <div class="card">
+            <h3>🔢 号码吉凶分析</h3>
+            <p style="font-size:0.8rem; color:#666;">输入手机号、车牌或任意数字串进行八星五行解析</p>
+            <div class="input-group">
+                <input type="number" id="phoneNumber" placeholder="请输入数字 (如: 13812345678)">
             </div>
-
-        <div class="section-header" style="margin-top:30px;">九星数组 · 吉凶断语</div>
-        <div class="list-container" id="pair-list">
+            <button class="action-btn" onclick="analyzeNumber()">开始排盘</button>
+            
+            <div id="numberResult" style="display:none; margin-top:20px;">
+                <h4>分析结果：</h4>
+                <div class="result-grid" id="pairsOutput"></div>
+                <div id="summaryText" style="margin-top:15px; font-size:0.95rem;"></div>
             </div>
+        </div>
 
+        <div class="card">
+            <h3>📅 生辰数字五行 (功能5)</h3>
+            <div class="input-group">
+                <input type="date" id="birthDate">
+            </div>
+            <button class="action-btn" onclick="analyzeBirth()">分析生辰能量</button>
+            <div id="birthResult" style="margin-top:15px;"></div>
+        </div>
+    </div>
+
+    <div id="culture" class="section">
+        <div class="card">
+            <h3>☯ 易经基本构架</h3>
+            <p><strong>阴阳：</strong>万物之本，一阴一阳之谓道。</p>
+            <p><strong>三才：</strong>天（时）、地（利）、人（和）。</p>
+            <p><strong>五行：</strong>金、木、水、火、土，相生相克，生生不息。</p>
+            
+            <h4>五行生克 (功能6)</h4>
+            <div style="text-align:center; padding:10px; background:#f9f9f9; border-radius:5px;">
+                <p><strong>相生：</strong>木生火 → 火生土 → 土生金 → 金生水 → 水生木</p>
+                <p><strong>相克：</strong>木克土 → 土克水 → 水克火 → 火克金 → 金克木</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>📜 八卦起源</h3>
+            <table style="width:100%">
+                <tr>
+                    <th width="50%">先天八卦 (体)</th>
+                    <th width="50%">后天八卦 (用)</th>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>乾兑离震，巽坎艮坤</strong><br>
+                        <small>天地定位，山泽通气，雷风相薄，水火不相射。</small>
+                    </td>
+                    <td>
+                        <strong>坎坤震巽，乾兑艮离</strong><br>
+                        <small>帝出乎震，齐乎巽，相见乎离...成言乎艮。</small>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div id="reference" class="section">
+        <div class="card">
+            <h3>🌟 八星数字磁场表</h3>
+            <p>根据《数字能量学》，数字组合分为四吉星与四凶星。</p>
+            
+            <h4 style="color:#27ae60">四吉星 (上等运势)</h4>
+            <table>
+                <tr>
+                    <th>星名</th>
+                    <th>五行</th>
+                    <th>数组</th>
+                    <th>核心含义</th>
+                </tr>
+                <tr>
+                    <td>天医</td>
+                    <td>土</td>
+                    <td>13/31, 68/86, 49/94, 27/72</td>
+                    <td>财富、正桃花、业绩</td>
+                </tr>
+                <tr>
+                    <td>生气</td>
+                    <td>木</td>
+                    <td>14/41, 67/76, 39/93, 28/82</td>
+                    <td>贵人、乐观、生机</td>
+                </tr>
+                <tr>
+                    <td>延年</td>
+                    <td>金</td>
+                    <td>19/91, 78/87, 34/43, 26/62</td>
+                    <td>领导、守财、压力</td>
+                </tr>
+                <tr>
+                    <td>伏位</td>
+                    <td>木/平</td>
+                    <td>11/22, 33/44, 55/66...</td>
+                    <td>等待、蓄势、被动</td>
+                </tr>
+            </table>
+
+            <h4 style="color:#c0392b">四凶星 (需化解)</h4>
+            <table>
+                <tr>
+                    <th>星名</th>
+                    <th>五行</th>
+                    <th>数组</th>
+                    <th>核心含义</th>
+                </tr>
+                <tr>
+                    <td>绝命</td>
+                    <td>金</td>
+                    <td>12/21, 69/96, 48/84, 37/73</td>
+                    <td>冲动、投资、破财</td>
+                </tr>
+                <tr>
+                    <td>五鬼</td>
+                    <td>火</td>
+                    <td>18/81, 79/97, 36/63, 24/42</td>
+                    <td>变动、才华、血光</td>
+                </tr>
+                <tr>
+                    <td>六煞</td>
+                    <td>水</td>
+                    <td>16/61, 47/74, 38/83, 29/92</td>
+                    <td>异性缘、纠葛、情绪</td>
+                </tr>
+                <tr>
+                    <td>祸害</td>
+                    <td>土</td>
+                    <td>17/71, 89/98, 46/64, 23/32</td>
+                    <td>口舌、小人、病痛</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
 
 <script>
-    // --- 1. 单数八卦数据库 (完全依照你的文本) ---
-    const SINGLE_MAP = {
-        '1': { gua: '坎为坎水', elem: '水', color: 'bg-water', rel: '中男' },
-        '2': { gua: '坤为坤土', elem: '土', color: 'bg-earth', rel: '老母' },
-        '3': { gua: '震为震木', elem: '木', color: 'bg-wood',  rel: '长男' },
-        '4': { gua: '巽为巽木', elem: '木', color: 'bg-wood',  rel: '长女' },
-        '5': { gua: '中央戊土', elem: '土', color: 'bg-earth', rel: '戊己' },
-        '6': { gua: '乾为乾金', elem: '金', color: 'bg-metal', rel: '老父' },
-        '7': { gua: '兑为兑金', elem: '金', color: 'bg-metal', rel: '少女' },
-        '8': { gua: '艮为艮土', elem: '土', color: 'bg-earth', rel: '少男' },
-        '9': { gua: '离为离火', elem: '火', color: 'bg-fire',  rel: '中女' },
-        '0': { gua: '中央己土', elem: '土', color: 'bg-earth', rel: '隐性' }
+    // 基础数据定义 (八星数组库)
+    const starData = {
+        '13': { name: '天医', type: '吉', element: '土', level: 1, desc: '正财/正桃花' },
+        '31': { name: '天医', type: '吉', element: '土', level: 1, desc: '正财/正桃花' },
+        '68': { name: '天医', type: '吉', element: '土', level: 2, desc: '财运佳' },
+        '86': { name: '天医', type: '吉', element: '土', level: 2, desc: '财运佳' },
+        '49': { name: '天医', type: '吉', element: '土', level: 3, desc: '财运一般' },
+        '94': { name: '天医', type: '吉', element: '土', level: 3, desc: '财运一般' },
+        '27': { name: '天医', type: '吉', element: '土', level: 4, desc: '小财' },
+        '72': { name: '天医', type: '吉', element: '土', level: 4, desc: '小财' },
+
+        '14': { name: '生气', type: '吉', element: '木', level: 1, desc: '大贵人' },
+        '41': { name: '生气', type: '吉', element: '木', level: 1, desc: '大贵人' },
+        '67': { name: '生气', type: '吉', element: '木', level: 2, desc: '乐天派' },
+        '76': { name: '生气', type: '吉', element: '木', level: 2, desc: '乐天派' },
+        '39': { name: '生气', type: '吉', element: '木', level: 3, desc: '人缘好' },
+        '93': { name: '生气', type: '吉', element: '木', level: 3, desc: '人缘好' },
+        '28': { name: '生气', type: '吉', element: '木', level: 4, desc: '开心' },
+        '82': { name: '生气', type: '吉', element: '木', level: 4, desc: '开心' },
+
+        '19': { name: '延年', type: '吉', element: '金', level: 1, desc: '领袖格局' },
+        '91': { name: '延年', type: '吉', element: '金', level: 1, desc: '领袖格局' },
+        '78': { name: '延年', type: '吉', element: '金', level: 2, desc: '责任感' },
+        '87': { name: '延年', type: '吉', element: '金', level: 2, desc: '责任感' },
+        '34': { name: '延年', type: '吉', element: '金', level: 3, desc: '事业心' },
+        '43': { name: '延年', type: '吉', element: '金', level: 3, desc: '事业心' },
+        '26': { name: '延年', type: '吉', element: '金', level: 4, desc: '专注' },
+        '62': { name: '延年', type: '吉', element: '金', level: 4, desc: '专注' },
+
+        '12': { name: '绝命', type: '凶', element: '金', level: 1, desc: '极度冲动' },
+        '21': { name: '绝命', type: '凶', element: '金', level: 1, desc: '极度冲动' },
+        '69': { name: '绝命', type: '凶', element: '金', level: 2, desc: '投资风险' },
+        '96': { name: '绝命', type: '凶', element: '金', level: 2, desc: '投资风险' },
+        '48': { name: '绝命', type: '凶', element: '金', level: 3, desc: '敢拼' },
+        '84': { name: '绝命', type: '凶', element: '金', level: 3, desc: '敢拼' },
+        '37': { name: '绝命', type: '凶', element: '金', level: 4, desc: '直线思维' },
+        '73': { name: '绝命', type: '凶', element: '金', level: 4, desc: '直线思维' },
+
+        '17': { name: '祸害', type: '凶', element: '土', level: 1, desc: '口舌是非' },
+        '71': { name: '祸害', type: '凶', element: '土', level: 1, desc: '口舌是非' },
+        '89': { name: '祸害', type: '凶', element: '土', level: 2, desc: '好面子' },
+        '98': { name: '祸害', type: '凶', element: '土', level: 2, desc: '好面子' },
+        '46': { name: '祸害', type: '凶', element: '土', level: 3, desc: '抱怨' },
+        '64': { name: '祸害', type: '凶', element: '土', level: 3, desc: '抱怨' },
+        '23': { name: '祸害', type: '凶', element: '土', level: 4, desc: '嘴硬' },
+        '32': { name: '祸害', type: '凶', element: '土', level: 4, desc: '嘴硬' },
+
+        '18': { name: '五鬼', type: '凶', element: '火', level: 1, desc: '变动大' },
+        '81': { name: '五鬼', type: '凶', element: '火', level: 1, desc: '变动大' },
+        '79': { name: '五鬼', type: '凶', element: '火', level: 2, desc: '才华横溢' },
+        '97': { name: '五鬼', type: '凶', element: '火', level: 2, desc: '才华横溢' },
+        '36': { name: '五鬼', type: '凶', element: '火', level: 3, desc: '多疑' },
+        '63': { name: '五鬼', type: '凶', element: '火', level: 3, desc: '多疑' },
+        '24': { name: '五鬼', type: '凶', element: '火', level: 4, desc: '瞬间念头' },
+        '42': { name: '五鬼', type: '凶', element: '火', level: 4, desc: '瞬间念头' },
+
+        '16': { name: '六煞', type: '凶', element: '水', level: 1, desc: '情感纠葛' },
+        '61': { name: '六煞', type: '凶', element: '水', level: 1, desc: '情感纠葛' },
+        '47': { name: '六煞', type: '凶', element: '水', level: 2, desc: '异性缘佳' },
+        '74': { name: '六煞', type: '凶', element: '水', level: 2, desc: '异性缘佳' },
+        '38': { name: '六煞', type: '凶', element: '水', level: 3, desc: '情绪化' },
+        '83': { name: '六煞', type: '凶', element: '水', level: 3, desc: '情绪化' },
+        '29': { name: '六煞', type: '凶', element: '水', level: 4, desc: '细致' },
+        '92': { name: '六煞', type: '凶', element: '水', level: 4, desc: '细致' },
+
+        '11': { name: '伏位', type: '平', element: '木', level: 1, desc: '蓄势待发' },
+        '22': { name: '伏位', type: '平', element: '木', level: 1, desc: '蓄势待发' },
+        '33': { name: '伏位', type: '平', element: '木', level: 2, desc: '固守' },
+        '44': { name: '伏位', type: '平', element: '木', level: 2, desc: '固守' },
+        '55': { name: '伏位', type: '平', element: '木', level: 3, desc: '被动' },
+        '66': { name: '伏位', type: '平', element: '木', level: 3, desc: '被动' },
+        '77': { name: '伏位', type: '平', element: '木', level: 4, desc: '思考' },
+        '88': { name: '伏位', type: '平', element: '木', level: 4, desc: '思考' },
+        '99': { name: '伏位', type: '平', element: '木', level: 1, desc: '持续' },
+        '00': { name: '伏位', type: '平', element: '木', level: 1, desc: '隐性' }
     };
 
-    // --- 2. 双星数组数据库 ---
-    const PAIR_MAP = {
-        // 吉星
-        '13':{n:'天医',t:'吉',l:1}, '31':{n:'天医',t:'吉',l:1}, '68':{n:'天医',t:'吉',l:2}, '86':{n:'天医',t:'吉',l:2},
-        '49':{n:'天医',t:'吉',l:3}, '94':{n:'天医',t:'吉',l:3}, '27':{n:'天医',t:'吉',l:4}, '72':{n:'天医',t:'吉',l:4},
-        '14':{n:'生气',t:'吉',l:1}, '41':{n:'生气',t:'吉',l:1}, '67':{n:'生气',t:'吉',l:2}, '76':{n:'生气',t:'吉',l:2},
-        '39':{n:'生气',t:'吉',l:3}, '93':{n:'生气',t:'吉',l:3}, '28':{n:'生气',t:'吉',l:4}, '82':{n:'生气',t:'吉',l:4},
-        '19':{n:'延年',t:'吉',l:1}, '91':{n:'延年',t:'吉',l:1}, '78':{n:'延年',t:'吉',l:2}, '87':{n:'延年',t:'吉',l:2},
-        '34':{n:'延年',t:'吉',l:3}, '43':{n:'延年',t:'吉',l:3}, '26':{n:'延年',t:'吉',l:4}, '62':{n:'延年',t:'吉',l:4},
-        '11':{n:'伏位',t:'平',l:1}, '22':{n:'伏位',t:'平',l:1}, '33':{n:'伏位',t:'平',l:1}, '44':{n:'伏位',t:'平',l:1},
-        '55':{n:'伏位',t:'平',l:1}, '66':{n:'伏位',t:'平',l:1}, '77':{n:'伏位',t:'平',l:1}, '88':{n:'伏位',t:'平',l:1},
-        '99':{n:'伏位',t:'平',l:1}, '00':{n:'伏位',t:'平',l:1},
-
-        // 凶星
-        '12':{n:'绝命',t:'凶',l:1}, '21':{n:'绝命',t:'凶',l:1}, '69':{n:'绝命',t:'凶',l:2}, '96':{n:'绝命',t:'凶',l:2},
-        '48':{n:'绝命',t:'凶',l:3}, '84':{n:'绝命',t:'凶',l:3}, '37':{n:'绝命',t:'凶',l:4}, '73':{n:'绝命',t:'凶',l:4},
-        '18':{n:'五鬼',t:'凶',l:1}, '81':{n:'五鬼',t:'凶',l:1}, '79':{n:'五鬼',t:'凶',l:2}, '97':{n:'五鬼',t:'凶',l:2},
-        '36':{n:'五鬼',t:'凶',l:3}, '63':{n:'五鬼',t:'凶',l:3}, '24':{n:'五鬼',t:'凶',l:4}, '42':{n:'五鬼',t:'凶',l:4},
-        '16':{n:'六煞',t:'凶',l:1}, '61':{n:'六煞',t:'凶',l:1}, '47':{n:'六煞',t:'凶',l:2}, '74':{n:'六煞',t:'凶',l:2},
-        '38':{n:'六煞',t:'凶',l:3}, '83':{n:'六煞',t:'凶',l:3}, '29':{n:'六煞',t:'凶',l:4}, '92':{n:'六煞',t:'凶',l:4},
-        '17':{n:'祸害',t:'凶',l:1}, '71':{n:'祸害',t:'凶',l:1}, '89':{n:'祸害',t:'凶',l:2}, '98':{n:'祸害',t:'凶',l:2},
-        '46':{n:'祸害',t:'凶',l:3}, '64':{n:'祸害',t:'凶',l:3}, '23':{n:'祸害',t:'凶',l:4}, '32':{n:'祸害',t:'凶',l:4}
-    };
-
-    const LETTERS = {'A':'01','B':'02','C':'03','D':'04','E':'05','F':'06','G':'07','H':'08','I':'09','J':'10','K':'11','L':'12','M':'13','N':'14','O':'15','P':'16','Q':'17','R':'18','S':'19','T':'20','U':'21','V':'22','W':'23','X':'24','Y':'25','Z':'26'};
-
-    function run() {
-        let raw = document.getElementById('inputVal').value.toUpperCase().trim();
-        if(!raw) return;
-
-        // 1. 预处理：字母转数字
-        let processed = '';
-        for(let char of raw) {
-            if(/[A-Z]/.test(char)) processed += LETTERS[char];
-            else if(/[0-9]/.test(char)) processed += char;
-        }
-
-        document.getElementById('result-area').classList.remove('hidden');
-
-        // ------------------------------------------------
-        // 渲染 1：单数八卦卡片 (100% 还原截图逻辑)
-        // ------------------------------------------------
-        const grid = document.getElementById('single-grid');
-        grid.innerHTML = '';
-
-        for(let char of processed) {
-            const data = SINGLE_MAP[char];
-            if(data) {
-                const card = document.createElement('div');
-                card.className = 'gua-card';
-                card.innerHTML = `
-                    <div class="gc-num">${char}</div>
-                    <div class="gc-name">${data.gua}</div>
-                    <div class="gc-box ${data.color}">${data.elem}</div>
-                    <div class="gc-rel">${data.rel}</div>
-                `;
-                grid.appendChild(card);
-            }
-        }
-
-        // ------------------------------------------------
-        // 渲染 2：数组吉凶列表
-        // ------------------------------------------------
-        const list = document.getElementById('pair-list');
-        list.innerHTML = '';
-
-        for(let i=0; i<processed.length-1; i++) {
-            let pair = processed[i] + processed[i+1];
-            let info = PAIR_MAP[pair];
-
-            if(info) {
-                const row = document.createElement('div');
-                const isJi = info.t === '吉';
-                row.className = `list-row ${isJi ? 'row-ji' : (info.t === '凶' ? 'row-xiong' : '')}`;
-                
-                row.innerHTML = `
-                    <div class="lr-pair">${pair}</div>
-                    <div class="lr-info">
-                        <div class="lr-name ${isJi ? 'ji-text' : (info.t==='凶'?'xiong-text':'')}">${info.n}</div>
-                        <div class="lr-level">${info.l}级能量 · ${info.t}</div>
-                    </div>
-                `;
-                list.appendChild(row);
-            }
-        }
+    // 标签切换
+    function switchTab(tabId) {
+        document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.target.classList.add('active');
     }
+
+    // 1. 数字分析逻辑
+    function analyzeNumber() {
+        const input = document.getElementById('phoneNumber').value;
+        const resultDiv = document.getElementById('numberResult');
+        const grid = document.getElementById('pairsOutput');
+        const summary = document.getElementById('summaryText');
+        
+        if (!input || input.length < 2) {
+            alert("请输入至少2位数字");
+            return;
+        }
+
+        grid.innerHTML = '';
+        summary.innerHTML = '';
+        let pairCounts = { '天医': 0, '绝命': 0, '延年': 0, '五鬼': 0 };
+
+        // 拆分数字为数对 (例: 138 -> 13, 38)
+        // 过滤0和5的简单处理（在数字能量学中，0为隐性，5为加强，此处做基础版直接映射，复杂版需特殊处理）
+        // 为了演示清晰，我们暂且忽略0和5的特殊变曜规则，直接匹配
+        const cleanNum = input; 
+
+        for (let i = 0; i < cleanNum.length - 1; i++) {
+            const pair = cleanNum.substring(i, i+2);
+            const data = starData[pair];
+            
+            const div = document.createElement('div');
+            
+            if (data) {
+                // 统计吉凶
+                if(pairCounts[data.name] !== undefined) pairCounts[data.name]++;
+                
+                // 渲染 UI
+                let colorClass = data.type === '吉' ? 'ji' : (data.type === '凶' ? 'xiong' : 'ping');
+                div.className = `num-pair ${colorClass}`;
+                div.innerHTML = `<div class="digits">${pair}</div>
+                                 <div class="star-name">${data.name}</div>
+                                 <div style="font-size:0.7rem">${data.level}级</div>`;
+            } else {
+                // 处理 05 或其他未定义组合
+                div.className = `num-pair`;
+                div.innerHTML = `<div class="digits">${pair}</div><div class="star-name">-</div>`;
+            }
+            grid.appendChild(div);
+        }
+
+        // 生成简报
+        let summaryHtml = "<strong>磁场简评：</strong><br>";
+        if(pairCounts['天医'] > 0) summaryHtml += "💰 含有天医磁场，利于财运与正桃花。<br>";
+        if(pairCounts['绝命'] > 0) summaryHtml += "⚠️ 含有绝命磁场，行事冲动，需注意理财。<br>";
+        if(pairCounts['延年'] > 0) summaryHtml += "👔 含有延年磁场，工作能力强，压力较大。<br>";
+        if(pairCounts['五鬼'] > 0) summaryHtml += "👻 含有五鬼磁场，思维活跃但易生变动。<br>";
+        
+        summary.innerHTML = summaryHtml;
+        resultDiv.style.display = 'block';
+    }
+
+    // 2. 生辰数字五行逻辑 (九宫数/生命灵数算法变体)
+    function analyzeBirth() {
+        const dateInput = document.getElementById('birthDate').value;
+        if(!dateInput) { alert("请选择日期"); return; }
+        
+        const date = new Date(dateInput);
+        const y = date.getFullYear();
+        const m = date.getMonth() + 1;
+        const d = date.getDate();
+        
+        // 简单计算主命数 (将年月日数字相加直到个位)
+        const sumDigits = (num) => num.toString().split('').reduce((a,b)=>parseInt(a)+parseInt(b), 0);
+        let total = sumDigits(y) + sumDigits(m) + sumDigits(d);
+        while(total > 9) {
+            total = sumDigits(total);
+        }
+
+        // 数字对应五行 (洛书数/河图数混合参考，此处采用常见对应)
+        // 1水, 2土, 3木, 4木, 5土, 6金, 7金, 8土, 9火
+        const wxMap = {
+            1: '水 (坎宫)', 2: '土 (坤宫)', 3: '木 (震宫)', 
+            4: '木 (巽宫)', 5: '土 (中宫)', 6: '金 (乾宫)', 
+            7: '金 (兑宫)', 8: '土 (艮宫)', 9: '火 (离宫)'
+        };
+
+        const resultHtml = `
+            <p><strong>生辰主命数：</strong> ${total}</p>
+            <p><strong>核心五行：</strong> ${wxMap[total]}</p>
+            <p><strong>五行建议：</strong> ${getWxAdvice(total)}</p>
+        `;
+        document.getElementById('birthResult').innerHTML = resultHtml;
+    }
+
+    function getWxAdvice(num) {
+        if(num === 1) return "水主智，宜从事思考、流动性行业，注意肾脏保养。";
+        if(num === 9) return "火主礼，宜文化、艺术、科技行业，注意心血管保养。";
+        if(num === 3 || num === 4) return "木主仁，宜教育、医疗、出版行业，注意肝胆保养。";
+        if(num === 6 || num === 7) return "金主义，宜金融、法律、管理行业，注意呼吸系统。";
+        return "土主信，宜地产、农业、服务行业，注意脾胃保养。";
+    }
+
 </script>
 
 </body>
